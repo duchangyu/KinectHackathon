@@ -17,8 +17,8 @@ namespace client
 
         RestClient m_client;
 
-        string baseURL = "http://localhost:9132/";
-        //string baseURL = "http://kinecthackathon.azurewebsites.net/";
+        //string baseURL = "http://localhost:9132/";
+        string baseURL = "http://kinecthackathon.azurewebsites.net/";
         
         public Form1()
         {
@@ -29,6 +29,10 @@ namespace client
         private void btnSend_Click(object sender, EventArgs e)
         {
             timer1.Start();
+
+            btnSend.Enabled = false;
+            button1.Enabled = true;
+            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -88,6 +92,9 @@ namespace client
         private void button1_Click(object sender, EventArgs e)
         {
             timer1.Stop();
+
+            btnSend.Enabled = true;
+            button1.Enabled = false;
         }
     }
 }
