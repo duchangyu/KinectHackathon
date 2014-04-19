@@ -11,17 +11,22 @@ namespace client
 
         public static DataTransfer GetOneData()
         {
-            //string[] directions = { "left", "right", "forward", "backword" };
+
+            Array values = Enum.GetValues(typeof(MoveDirection));
+            Random random = new Random();
+            MoveDirection randomMoveDirection = (MoveDirection)values.GetValue(random.Next(values.Length));
 
             DataTransfer dm = new DataTransfer();
-            dm.MoveDirection = MoveDirection.backword;
+            dm.MoveDirection = randomMoveDirection;
             dm.LookAngle = 10;
+            dm.LookDirection = LookDirection.up;
+
+
+            dm.ExtData.ReceivedFlag = false;
+            dm.ExtData.TimeStap = System.DateTime.Now;
+            
             
 
-            //dm.MoveDirection = 
-            //dm.ReceivedFlag = false;
-            //dm.Message = "OK";
-            //dm.TimeStap = System.DateTime.Now;
 
             return dm;
         }

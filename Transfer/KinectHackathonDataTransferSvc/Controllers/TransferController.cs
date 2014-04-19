@@ -17,7 +17,7 @@ namespace KinectHackathonDataTransferSvc.Controllers
         // GET api/transfer
         public IEnumerable<DataTransfer> Get()
         {
-            List<DataTransfer> lst = datas.Where(m => m.ReceivedFlag == false) as List<DataTransfer>;
+            List<DataTransfer> lst = datas.Where(m => m.ExtData.ReceivedFlag == false) as List<DataTransfer>;
                
             
             foreach (var item in lst)

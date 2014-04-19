@@ -27,6 +27,11 @@ namespace client
 
         private void btnSend_Click(object sender, EventArgs e)
         {
+            timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
             var dm = TestDataGenerator.GetOneData();
 
 
@@ -44,6 +49,7 @@ namespace client
             {
                 listBox1.Items.Add(dm.ToString());
             }
+
         }
     }
 }
