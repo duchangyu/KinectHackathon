@@ -18,6 +18,8 @@ namespace client
 
             DataTransfer dm = new DataTransfer();
             dm.MoveDirection = randomMoveDirection;
+            //dm.MoveDirection = MoveDirection.forward;
+            dm.MoveSpeed = 10;
             dm.LookAngle = 10;
             dm.LookDirection = LookDirection.up;
 

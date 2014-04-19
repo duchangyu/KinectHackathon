@@ -1,0 +1,5 @@
+C:\Users\duda\Documents\GitHub\KinectHackathon\DataModel\bin\Release\DataModel.dll
+C:\Users\duda\Documents\GitHub\KinectHackathon\DataModel\bin\Release\DataModel.pdb
+C:\Users\duda\Documents\GitHub\KinectHackathon\DataModel\obj\Release\DataModel.csprojResolveAssemblyReference.cache
+C:\Users\duda\Documents\GitHub\KinectHackathon\DataModel\obj\Release\DataModel.dll
+C:\Users\duda\Documents\GitHub\KinectHackathon\DataModel\obj\Release\DataModel.pdb

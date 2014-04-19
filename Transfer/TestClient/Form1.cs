@@ -68,7 +68,7 @@ namespace client
 
         private void Send(DataTransfer dm)
         {
-            RestRequest req = new RestRequest("api/transfer");
+            RestRequest req = new RestRequest("api/transfer?last");
             req.Method = Method.POST;
             req.RequestFormat = DataFormat.Json;
             req.AddHeader("content-type", "application/json");

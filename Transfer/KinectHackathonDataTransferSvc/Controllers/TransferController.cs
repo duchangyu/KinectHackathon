@@ -20,7 +20,7 @@ namespace KinectHackathonDataTransferSvc.Controllers
             IEnumerable<DataTransfer> lst = datas.Where(m => m.ExtData.ReceivedFlag == false)
                 .AsEnumerable<DataTransfer>(); //as List<DataTransfer>;
 
-
+      
             //foreach (var item in lst)
             //{
             //    item.ExtData.ReceivedFlag = true;
@@ -30,6 +30,13 @@ namespace KinectHackathonDataTransferSvc.Controllers
             return lst;
         }
 
+        //GET api/transfer?last=last
+        public DataTransfer Get(string last)
+        {
+            return datas.LastOrDefault<DataTransfer>();
+        }
+
+   
 
         // GET api/transfer/5
         public string Get(int id)
