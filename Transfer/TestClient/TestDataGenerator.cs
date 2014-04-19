@@ -21,9 +21,13 @@ namespace client
             dm.LookAngle = 10;
             dm.LookDirection = LookDirection.up;
 
-
-            dm.ExtData.ReceivedFlag = false;
-            dm.ExtData.TimeStap = System.DateTime.Now;
+            HttpTransferExtData extData = new HttpTransferExtData
+            {
+                ReceivedFlag = false,
+                TimeStap = System.DateTime.Now
+            };
+            dm.ExtData = extData;
+           
             
             
 

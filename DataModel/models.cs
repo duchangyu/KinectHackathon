@@ -30,6 +30,10 @@ namespace DataModel
         public HttpTransferExtData ExtData { get; set; }
 
 
+        public override string ToString()
+        {
+            return MoveDirection.ToString() + "_" + ExtData.TimeStap.ToString();
+        }
     }
 
     public class HttpTransferExtData

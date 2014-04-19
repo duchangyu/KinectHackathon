@@ -35,6 +35,39 @@ namespace client
             var dm = TestDataGenerator.GetOneData();
 
 
+            Send(dm);
+
+            Receive();
+        }
+
+        private void Receive()
+        {
+            RestRequest req = new RestRequest("api/transfer");
+            req.Method = Method.GET;
+            req.RequestFormat = DataFormat.Json;
+            req.AddHeader("content-type", "application/json");
+            req.AddHeader("accept", "application/json");
+
+
+            IRestResponse<List<DataTransfer>> resp = m_client.Execute<List<DataTransfer>>(req);
+
+            if (resp.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var dms = resp.Data;
+
+                listBox2.BeginUpdate();
+                foreach (var item in dms)
+                {
+                    listBox2.Items.Insert(0,item.ToString());
+                }
+                listBox2.EndUpdate();
+
+                
+            }
+        }
+
+        private void Send(DataTransfer dm)
+        {
             RestRequest req = new RestRequest("api/transfer");
             req.Method = Method.POST;
             req.RequestFormat = DataFormat.Json;
@@ -47,9 +80,13 @@ namespace client
             if (resp.StatusCode == System.Net.HttpStatusCode.OK
                 || resp.StatusCode == System.Net.HttpStatusCode.Created)
             {
-                listBox1.Items.Add(dm.ToString());
+                listBox1.Items.Insert(0, dm.ToString());
             }
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
         }
     }
 }
