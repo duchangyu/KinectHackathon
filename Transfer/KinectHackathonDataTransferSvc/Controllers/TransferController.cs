@@ -33,7 +33,10 @@ namespace KinectHackathonDataTransferSvc.Controllers
         //GET api/transfer?last=last
         public DataTransfer Get(string last)
         {
-            return datas.LastOrDefault<DataTransfer>();
+            
+            DataTransfer dm = datas.LastOrDefault<DataTransfer>();
+            datas.Clear();
+            return dm;
         }
 
    

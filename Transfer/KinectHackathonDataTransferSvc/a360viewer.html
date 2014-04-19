@@ -175,6 +175,10 @@
         var MOVE_FORWARD = 0;//'forward';
         var MOVE_BACKWORD = 1;// 'backword';
 
+        var ANGLEFACTOR = 10;
+        var TUNR_LEFT = 0; //left
+        var TURN_RIGHT = 1;// right
+
         var moveActive;
         function listenToCloud() {
             
@@ -188,16 +192,30 @@
                         function (data) {
                             // On success, 'data' contains a list of UserCommandsHits.
                             //$.each(data, function (key, val) {
-                                if (data) {
+                            if (data) {
+
+                                //move back and force
                                     var moveDirection = data.MoveDirection;
                                     var moveSpeed = data.MoveSpeed;
-
+                                   
                                     if (moveDirection === MOVE_FORWARD) {
                                         moveForward(viewer, moveSpeed);
                                     }
                                     if (moveDirection === MOVE_BACKWORD) {
                                         moveBackward(viewer, moveSpeed);
                                     }
+
+                                //turn left or right
+                                    var turnDirection = data.TurnDirection;
+                                    var turnAngle = data.TurnAngle;
+                                    if (turnDirection === TUNR_LEFT) {
+                                        turnLeft(viewer, turnAngle);
+                                    }
+                                    if (turnDirection === TURN_RIGHT) {
+                                        turnRight(viewer, turnAngle);
+                                    }
+
+
                                     console.log(moveDirection + ' - ' + moveSpeed);
                                 }
                             //});
@@ -226,6 +244,20 @@
             if (viewer instanceof Autodesk.BaseViewer3D) {
                 var cam = viewer.getCamera();
                 cam.position.z += speed * SCALEFACTOR;
+                viewer.impl.applyCamera(cam);
+            }
+        }
+        function turnRight(viewer, turnAngle) {
+            if (viewer instanceof Autodesk.BaseViewer3D) {
+                var cam = viewer.getCamera();
+                cam.translateX(turnAngle * ANGLEFACTOR);
+                viewer.impl.applyCamera(cam);
+            }
+        }
+        function turnLeft(viewer, turnAngle) {
+            if (viewer instanceof Autodesk.BaseViewer3D) {
+                var cam = viewer.getCamera();
+                cam.translateX(-turnAngle * ANGLEFACTOR);
                 viewer.impl.applyCamera(cam);
             }
         }

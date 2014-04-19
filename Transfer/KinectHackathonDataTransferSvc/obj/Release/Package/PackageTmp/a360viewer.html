@@ -52,6 +52,8 @@
         function initializeViewer(options) {
             var svfURL = options.svf;
             var documentId = options.documentId;
+            //hack, use local model
+            svfURL = 'data/house/Residential Exterior.obj.svf';
 
             if (svfURL && svfURL.indexOf("urn:") == -1) {
                 // Load local svf file.
@@ -169,19 +171,57 @@
 
 
 
+        var SCALEFACTOR = 1000;
+        var MOVE_FORWARD = 0;//'forward';
+        var MOVE_BACKWORD = 1;// 'backword';
+
+        var ANGLEFACTOR = 10;
+        var TUNR_LEFT = 0; //left
+        var TURN_RIGHT = 1;// right
+
         var moveActive;
-        function rotate() {
+        function listenToCloud() {
+            
             var xStep = 10;
 
             if (moveActive == undefined) {
 
                 moveActive = setInterval(function () {
 
-                    if (viewer instanceof Autodesk.BaseViewer3D) {
-                        var cam = viewer.getCamera();
-                        cam.translateX(xStep);
-                        viewer.impl.applyCamera(cam);
-                    }
+                    $.getJSON("api/transfer?last=last",
+                        function (data) {
+                            // On success, 'data' contains a list of UserCommandsHits.
+                            //$.each(data, function (key, val) {
+                            if (data) {
+
+                                //move back and force
+                                    var moveDirection = data.MoveDirection;
+                                    var moveSpeed = data.MoveSpeed;
+                                   
+                                    if (moveDirection === MOVE_FORWARD) {
+                                        moveForward(viewer, moveSpeed);
+                                    }
+                                    if (moveDirection === MOVE_BACKWORD) {
+                                        moveBackward(viewer, moveSpeed);
+                                    }
+
+                                //turn left or right
+                                    var turnDirection = data.TurnDirection;
+                                    var turnAngle = data.TurnAngle;
+                                    if (turnDirection === TUNR_LEFT) {
+                                        turnLeft(viewer, turnAngle);
+                                    }
+                                    if (turnDirection === TURN_RIGHT) {
+                                        turnRight(viewer, turnAngle);
+                                    }
+
+
+                                    console.log(moveDirection + ' - ' + moveSpeed);
+                                }
+                            //});
+                        });
+
+
              
                 }, 100);
             }
@@ -192,8 +232,39 @@
         }
 
 
+        function moveForward(viewer, speed ) {
+            if (viewer instanceof Autodesk.BaseViewer3D) {
+                var cam = viewer.getCamera();
+                //cam.translateX(speed * SCALEFACTOR);
+                cam.position.z -= speed * SCALEFACTOR;
+                viewer.impl.applyCamera(cam);
+            }
+        }
+        function moveBackward(viewer, speed) {
+            if (viewer instanceof Autodesk.BaseViewer3D) {
+                var cam = viewer.getCamera();
+                cam.position.z += speed * SCALEFACTOR;
+                viewer.impl.applyCamera(cam);
+            }
+        }
+        function turnRight(viewer, turnAngle) {
+            if (viewer instanceof Autodesk.BaseViewer3D) {
+                var cam = viewer.getCamera();
+                cam.translateX(turnAngle * ANGLEFACTOR);
+                viewer.impl.applyCamera(cam);
+            }
+        }
+        function turnLeft(viewer, turnAngle) {
+            if (viewer instanceof Autodesk.BaseViewer3D) {
+                var cam = viewer.getCamera();
+                cam.translateX(-turnAngle * ANGLEFACTOR);
+                viewer.impl.applyCamera(cam);
+            }
+        }
+
+
         //call the action
-        rotate();
+        listenToCloud();
 
     </script>
 </head>

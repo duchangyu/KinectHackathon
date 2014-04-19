@@ -18,6 +18,7 @@ namespace client
         RestClient m_client;
 
         string baseURL = "http://localhost:9132/";
+        //string baseURL = "http://kinecthackathon.azurewebsites.net/";
         
         public Form1()
         {

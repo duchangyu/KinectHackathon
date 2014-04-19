@@ -20,8 +20,14 @@ namespace client
             dm.MoveDirection = randomMoveDirection;
             //dm.MoveDirection = MoveDirection.forward;
             dm.MoveSpeed = 10;
-            dm.LookAngle = 10;
+
+            dm.TurnDirection = TurnDirection.left;
+            dm.TurnAngle = 10;
+
             dm.LookDirection = LookDirection.up;
+            dm.LookAngle = 10;
+
+
 
             HttpTransferExtData extData = new HttpTransferExtData
             {
