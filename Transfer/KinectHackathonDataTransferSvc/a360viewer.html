@@ -1,177 +1,211 @@
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
     <title>Viewer 3D Demo : @buildnum@</title>
-    <meta name="viewport" content="width=device-width, target-densityDpi=device-dpi, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, target-densityDpi=device-dpi, minimum-scale=1.0, maximum-scale=1.0"/>
     <meta charset="utf-8">
 
-    <link rel="stylesheet" href="https://viewing-dev.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css">
-    <script src="https://viewing-dev.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
-
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css" type="text/css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
- 
+
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js"></script>
+    <script src="https://rawgit.com/Developer-Autodesk/library-javascript-view.and.data.api/master/js/Autodesk.ADN.Toolkit.Viewer.js"></script>
+
+
 
     <script>
+
+        //global variable 
+        var oViewer;
+
+        //replace with your own urn ...
+        var urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwtYXMtYS1zZXJ2aWNlMjAxNTAxMjYvU3VzcGVuc2lvbi5kd2Y=';
+
+        $(document).ready(function () {
+            var adnViewerMng = new Autodesk.ADN.Toolkit.Viewer.AdnViewerManager(
+            	// url of token service
+            	//(ex reply: {token_type: "Bearer", expires_in: 1799, access_token: "..."}
+                'https://still-spire-1606.herokuapp.com/api/rawtoken',
+                document.getElementById('viewer3d'));
+            var paramUrn = Autodesk.Viewing.Private.getParameterByName('urn');
+            urn = (paramUrn !== '' ? paramUrn : urn);
+            if (urn.substring(0, 4) != "urn:")
+                urn = 'urn:' + urn;
+            adnViewerMng.loadDocument(urn, onViewerInitialized, onError);
+        });
+        var onViewerInitialized = function (viewer) {
+            //export the viewer object to global object
+            oViewer = viewer;
+
+            //Now it's your turn to have fun with viewer client API...
+            //For example, you can get the camera of viewer
+            //var camera = viewer.getCamera();
+            //console.dir(camera);
+        };
+        var onError = function (error) {
+            console.error(error);
+        };
+
+        //var av = Autodesk.Viewing;
         
-        var viewer;
+        //var viewer;
 
-        function getOptionsFromQueryString() {
-            var config3d = {};
-            var canvasConfig = getParameterByName("canvasConfig");
-            if (canvasConfig) {
-                config3d.canvasConfig = JSON.parse(canvasConfig);
-            }
+        //function getOptionsFromQueryString() {
+        //    var config3d = {};
+        //    var canvasConfig = av.Private.getParameterByName("canvasConfig");
+        //    if (canvasConfig) {
+        //        config3d.canvasConfig = JSON.parse(canvasConfig);
+        //    }
 
-            var docStructureConfig = getParameterByName("docConfig");
-            if (docStructureConfig) {
-                config3d.docStructureConfig = JSON.parse(docStructureConfig);
-            }
+        //    var docStructureConfig = av.Private.getParameterByName("docConfig");
+        //    if (docStructureConfig) {
+        //        config3d.docStructureConfig = JSON.parse(docStructureConfig);
+        //    }
 
-            var svfURL = getParameterByName("file");
-            if(!svfURL)
-                svfURL = getParameterByName("svf");
-            var documentId = getParameterByName("document");
-            var initialItemId = getParameterByName("item");
-            var isolateObjectId = getParameterByName("object");
+        //    var svfURL = av.Private.getParameterByName("file");
+        //    if(!svfURL)
+        //        svfURL = av.Private.getParameterByName("svf");
+        //    var documentId = av.Private.getParameterByName("document");
+        //    var initialItemId = av.Private.getParameterByName("item");
+        //    var isolateObjectId = av.Private.getParameterByName("object");
 
-            return {
-                config3d : config3d,
-                documentId: documentId,
-                svf: svfURL,
-                initialItemId: initialItemId,
-                isolateObjectId: isolateObjectId,
-				env: "Development"
-            };
-        }
+        //    return {
+        //        config3d : config3d,
+        //        documentId: documentId,
+        //        svf: svfURL,
+        //        initialItemId: initialItemId,
+        //        isolateObjectId: isolateObjectId,
+		//		env: "Development"
+        //    };
+        //}
 
-        function initializeViewer(options) {
-            var svfURL = options.svf;
-            var documentId = options.documentId;
-            //hack, use local model
-            svfURL = 'data/house/Residential Exterior.obj.svf';
+        //function initializeViewer(options) {
+        //    var svfURL = options.svf;
+        //    var documentId = options.documentId;
+        //    //hack, use local model
+        //    svfURL = 'data/house/Residential Exterior.obj.svf';
 
-            if (svfURL && svfURL.indexOf("urn:") == -1) {
-                // Load local svf file.
-				var viewerElement = document.getElementById('viewer3d');
-				viewer = new Autodesk.GuiViewer3D(viewerElement, options.config3d);
+        //    if (svfURL && svfURL.indexOf("urn:") == -1) {
+        //        // Load local svf file.
+		//		var viewerElement = document.getElementById('viewer3d');
+		//		viewer = new av.Private.GuiViewer3D(viewerElement, options.config3d);
 
-                viewer.initialize();
-                // hookup selection changed event
-                viewer.addEventListener(SELECTION_CHANGED_EVENT, selectionChangedEventHandler);
+        //        viewer.start();
+        //        // hookup selection changed event
+        //        viewer.addEventListener(av.SELECTION_CHANGED_EVENT, selectionChangedEventHandler);
 
-                viewer.load(svfURL);
-            } else if (svfURL && svfURL.indexOf("urn:") == 0) {
-                // Load remote svf file through viewing service.
-                Autodesk.Initializer(options, function(){
-				var viewerElement = document.getElementById('viewer3d');
-				viewer = new Autodesk.GuiViewer3D(viewerElement, options.config3d);
+        //        viewer.load(svfURL);
+        //    } else if (svfURL && svfURL.indexOf("urn:") == 0) {
+        //        // Load remote svf file through viewing service.
+        //        Autodesk.Initializer(options, function(){
+		//		var viewerElement = document.getElementById('viewer3d');
+		//		viewer = new Autodesk.GuiViewer3D(viewerElement, options.config3d);
 
-                viewer.initialize();
-				viewer.load(svfURL);});
-            } else if (documentId && documentId.indexOf("urn:") == -1) {
-                // Load local document.
-				var viewerElement = document.getElementById('viewer3d');
-				viewer = new Autodesk.GuiViewer3D(viewerElement, options.config3d);
+        //        viewer.initialize();
+		//		viewer.load(svfURL);});
+        //    } else if (documentId && documentId.indexOf("urn:") == -1) {
+        //        // Load local document.
+		//		var viewerElement = document.getElementById('viewer3d');
+		//		viewer = new Autodesk.GuiViewer3D(viewerElement, options.config3d);
 	
-                viewer.initialize();
-                loadDocument(viewer, getAuthObject(), documentId, options.initialItemId);
-            } else {
-                // Load document through viewing service. Use a default document
-                // if the document is not explicitly specified.
-                if(!documentId)
-                    documentId = "urn:dXJuOmFkc2suczM6ZGVyaXZlZC5maWxlOm1pY2hhZWwvRW5naW5lLmR3Zg==";
-                Autodesk.Initializer(options, function(){
-				    var viewerElement = document.getElementById('viewer3d');
-				    viewer = new Autodesk.GuiViewer3D(viewerElement, options.config3d);
+        //        viewer.initialize();
+        //        loadDocument(viewer, getAuthObject(), documentId, options.initialItemId);
+        //    } else {
+        //        // Load document through viewing service. Use a default document
+        //        // if the document is not explicitly specified.
+        //        if(!documentId)
+        //            documentId = "urn:dXJuOmFkc2suczM6ZGVyaXZlZC5maWxlOm1pY2hhZWwvRW5naW5lLmR3Zg==";
+        //        Autodesk.Initializer(options, function(){
+		//		    var viewerElement = document.getElementById('viewer3d');
+		//		    viewer = new Autodesk.GuiViewer3D(viewerElement, options.config3d);
 			
-                    viewer.initialize();
+        //            viewer.initialize();
 
-                    viewer.addEventListener(SELECTION_CHANGED_EVENT, selectionChangedEventHandler);
+        //            viewer.addEventListener(SELECTION_CHANGED_EVENT, selectionChangedEventHandler);
 
-                    loadDocument(viewer, getAuthObject(), documentId, options.initialItemId);
-                });
+        //            loadDocument(viewer, getAuthObject(), documentId, options.initialItemId);
+        //        });
 
 
                
                
-            }
-        }
+        //    }
+        //}
 
-        //Used for loading models hosted inside "bubbles" in the viewing service.
-        function loadDocument(viewer, auth, documentId, initialItemId)
-        {
-            // Load the document.  Once loaded, find the item requested.  If not found,
-            // just find the first 3d geometry and load that.
-            //
-            Autodesk.Document.load(documentId, auth,
-                    function(document) { // onLoadCallback
-                        var geometryItems = [];
+        ////Used for loading models hosted inside "bubbles" in the viewing service.
+        //function loadDocument(viewer, auth, documentId, initialItemId)
+        //{
+        //    // Load the document.  Once loaded, find the item requested.  If not found,
+        //    // just find the first 3d geometry and load that.
+        //    //
+        //    Autodesk.Document.load(documentId, auth,
+        //            function(document) { // onLoadCallback
+        //                var geometryItems = [];
 
-                        if(initialItemId) {
-                            geometryItems = Autodesk.Document.getSubItemsWithProperties(document.getRootItem(), {'guid':initialItemId}, true);
-                        }
+        //                if(initialItemId) {
+        //                    geometryItems = Autodesk.Document.getSubItemsWithProperties(document.getRootItem(), {'guid':initialItemId}, true);
+        //                }
 
-                        if(geometryItems.length == 0) {
-                            geometryItems = Autodesk.Document.getSubItemsWithProperties(document.getRootItem(), {'type':'geometry', 'role':'3d'}, true);
-                        }
+        //                if(geometryItems.length == 0) {
+        //                    geometryItems = Autodesk.Document.getSubItemsWithProperties(document.getRootItem(), {'type':'geometry', 'role':'3d'}, true);
+        //                }
 
-                        if(geometryItems.length > 0) {
-                            viewer.load(document.getViewablePath(geometryItems[0]));
-                        }
-                    },
-                    function(errorMsg, httpErrorCode) { // onErrorCallback
-                        var container = document.getElementById('viewer2d');
-                        if (container) {
-                            var errorCode = ErrorHander.getErrorCode( httpErrorCode );
-                            ErrorHandler.reportError(container, errorCode);
-                        }
-                    }
-            );
-        }
+        //                if(geometryItems.length > 0) {
+        //                    viewer.load(document.getViewablePath(geometryItems[0]));
+        //                }
+        //            },
+        //            function(errorMsg, httpErrorCode) { // onErrorCallback
+        //                var container = document.getElementById('viewer2d');
+        //                if (container) {
+        //                    var errorCode = ErrorHander.getErrorCode( httpErrorCode );
+        //                    ErrorHandler.reportError(container, errorCode);
+        //                }
+        //            }
+        //    );
+        //}
 
 
-        function selectionChangedEventHandler(event) {
+        //function selectionChangedEventHandler(event) {
 
-            var dbIdArray = event.dbIdArray;
-            //var a = $('#viewer3d');
+        //    var dbIdArray = event.dbIdArray;
+        //    //var a = $('#viewer3d');
 
-            var dbId = dbIdArray[0];
-            if (dbId == 'undefined') {
-                return;
-            }
-            alert('selected dbid' + dbId);
+        //    var dbId = dbIdArray[0];
+        //    if (dbId == 'undefined') {
+        //        return;
+        //    }
+        //    alert('selected dbid' + dbId);
 
-            // Send an AJAX request
-            $.getJSON("api/ExtInfoSvc?modelId=" + dbId,
-                    function (data) {
-                        // On success, 'data' contains a list of UserCommandsHits.
-                        $.each(data, function (key, val) {
-                            //$("select").append(
-                            //    '<option value="' + val.UserName + '">'
-                            //        + val.UserName +
-                            //    '</option>');
-                            if (data) {
+        //    // Send an AJAX request
+        //    $.getJSON("api/ExtInfoSvc?modelId=" + dbId,
+        //            function (data) {
+        //                // On success, 'data' contains a list of UserCommandsHits.
+        //                $.each(data, function (key, val) {
+        //                    //$("select").append(
+        //                    //    '<option value="' + val.UserName + '">'
+        //                    //        + val.UserName +
+        //                    //    '</option>');
+        //                    if (data) {
 
-                            }
-                            alert(val.MaterialName);
-                        })
-                        .fail(
-                    function (jqXHR, textStatus, err) {
-                        alert(err);
+        //                    }
+        //                    alert(val.MaterialName);
+        //                })
+        //                .fail(
+        //            function (jqXHR, textStatus, err) {
+        //                alert(err);
                         
-                    });
-                    });
+        //            });
+        //            });
 
-        }
+        //}
 
 
 
-        var SCALEFACTOR = 1000;
+        var SCALEFACTOR = 1;
         var MOVE_FORWARD = 0;//'forward';
         var MOVE_BACKWORD = 1;// 'backword';
 
@@ -199,20 +233,20 @@
                                     var moveSpeed = data.MoveSpeed;
                                    
                                     if (moveDirection === MOVE_FORWARD) {
-                                        moveForward(viewer, moveSpeed);
+                                        moveForward(oViewer, moveSpeed);
                                     }
                                     if (moveDirection === MOVE_BACKWORD) {
-                                        moveBackward(viewer, moveSpeed);
+                                        moveBackward(oViewer, moveSpeed);
                                     }
 
                                 //turn left or right
                                     var turnDirection = data.TurnDirection;
                                     var turnAngle = data.TurnAngle;
                                     if (turnDirection === TUNR_LEFT) {
-                                        turnLeft(viewer, turnAngle);
+                                        turnLeft(oViewer, turnAngle);
                                     }
                                     if (turnDirection === TURN_RIGHT) {
-                                        turnRight(viewer, turnAngle);
+                                        turnRight(oViewer, turnAngle);
                                     }
 
 
@@ -233,32 +267,32 @@
 
 
         function moveForward(viewer, speed ) {
-            if (viewer instanceof Autodesk.BaseViewer3D) {
-                var cam = viewer.getCamera();
-                //cam.translateX(speed * SCALEFACTOR);
-                cam.position.z -= speed * SCALEFACTOR;
-                viewer.impl.applyCamera(cam);
+            if (viewer instanceof Autodesk.Viewing.Viewer3D) {
+                var pos = viewer.navigation.getPosition();
+                pos.z -= speed * SCALEFACTOR;
+                viewer.navigation.setPosition(pos);
+           
             }
         }
         function moveBackward(viewer, speed) {
-            if (viewer instanceof Autodesk.BaseViewer3D) {
-                var cam = viewer.getCamera();
-                cam.position.z += speed * SCALEFACTOR;
-                viewer.impl.applyCamera(cam);
+            if (viewer instanceof Autodesk.Viewing.Viewer3D) {
+                var pos = viewer.navigation.getPosition();
+                pos.z += speed * SCALEFACTOR;
+                viewer.navigation.setPosition(pos);
             }
         }
         function turnRight(viewer, turnAngle) {
-            if (viewer instanceof Autodesk.BaseViewer3D) {
-                var cam = viewer.getCamera();
-                cam.translateX(turnAngle * ANGLEFACTOR);
-                viewer.impl.applyCamera(cam);
+            if (viewer instanceof Autodesk.Viewing.Viewer3D) {
+                var pos = viewer.navigation.getPosition();
+                //pos.translateX(turnAngle * ANGLEFACTOR);
+                viewer.navigation.setPosition(pos);
             }
         }
         function turnLeft(viewer, turnAngle) {
-            if (viewer instanceof Autodesk.BaseViewer3D) {
-                var cam = viewer.getCamera();
-                cam.translateX(-turnAngle * ANGLEFACTOR);
-                viewer.impl.applyCamera(cam);
+            if (viewer instanceof Autodesk.Viewing.Viewer3D) {
+                var pos = viewer.navigation.getPosition();
+                //pos.translateX(-turnAngle * ANGLEFACTOR);
+                viewer.navigation.setPosition(pos);
             }
         }
 

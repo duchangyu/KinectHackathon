@@ -3,11 +3,6 @@ using DataModel;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace client
@@ -17,9 +12,9 @@ namespace client
 
         RestClient m_client;
 
-        //string baseURL = "http://localhost:9132/";
-        string baseURL = "http://kinecthackathon.azurewebsites.net/";
-        
+        string baseURL = "http://localhost:9132/";
+        //string baseURL = "http://kinecthackathon.azurewebsites.net/";
+
         public Form1()
         {
             InitializeComponent();
@@ -32,7 +27,7 @@ namespace client
 
             btnSend.Enabled = false;
             button1.Enabled = true;
-            
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -63,11 +58,11 @@ namespace client
                 listBox2.BeginUpdate();
                 foreach (var item in dms)
                 {
-                    listBox2.Items.Insert(0,item.ToString());
+                    listBox2.Items.Insert(0, item.ToString());
                 }
                 listBox2.EndUpdate();
 
-                
+
             }
         }
 

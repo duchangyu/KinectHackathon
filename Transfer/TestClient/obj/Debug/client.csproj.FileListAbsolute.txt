@@ -20,3 +20,15 @@ C:\Users\duda\Documents\GitHub\KinectHackathon\Transfer\TestClient\obj\Debug\cli
 C:\Users\duda\Documents\GitHub\KinectHackathon\Transfer\TestClient\obj\Debug\client.pdb
 C:\Users\duda\Documents\GitHub\KinectHackathon\Transfer\TestClient\bin\Debug\DataModel.dll
 C:\Users\duda\Documents\GitHub\KinectHackathon\Transfer\TestClient\bin\Debug\DataModel.pdb
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\bin\Debug\client.exe
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\bin\Debug\client.pdb
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\bin\Debug\DataModel.dll
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\bin\Debug\RestSharp.dll
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\bin\Debug\DataModel.pdb
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\bin\Debug\RestSharp.xml
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\obj\Debug\client.csprojResolveAssemblyReference.cache
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\obj\Debug\client.Form1.resources
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\obj\Debug\client.Properties.Resources.resources
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\obj\Debug\client.csproj.GenerateResource.Cache
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\obj\Debug\client.exe
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\Transfer\TestClient\obj\Debug\client.pdb

@@ -3,3 +3,7 @@ C:\Users\duda\Documents\GitHub\KinectHackathon\DataModel\bin\Debug\DataModel.pdb
 C:\Users\duda\Documents\GitHub\KinectHackathon\DataModel\obj\Debug\DataModel.csprojResolveAssemblyReference.cache
 C:\Users\duda\Documents\GitHub\KinectHackathon\DataModel\obj\Debug\DataModel.dll
 C:\Users\duda\Documents\GitHub\KinectHackathon\DataModel\obj\Debug\DataModel.pdb
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\DataModel\bin\Debug\DataModel.dll
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\DataModel\bin\Debug\DataModel.pdb
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\DataModel\obj\Debug\DataModel.dll
+C:\Users\dudaniel\Documents\GitHub\KinectHackathon\DataModel\obj\Debug\DataModel.pdb
